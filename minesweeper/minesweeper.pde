@@ -1,8 +1,8 @@
 //______________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 //YOU CAN CHANGE THESE.
-int cols = 20; // Min: 1, Max: what your pc can handle. Beware that nbombs must me less than or equal to cols*rows.
+int cols = 15; // Min: 1, Max: what your pc can handle. Beware that nbombs must me less than or equal to cols*rows.
 int rows = cols; // This can also be independent.
-int nbombs = 35; // Read comment above.
+int nbombs = 40; // Read comment above.
 //______________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 PImage B;
@@ -11,7 +11,7 @@ char[][] grid;
 boolean[][] bomb;
 boolean[][] discovered;
 boolean[][] flagged;
-int l;
+int lx, ly;
 int bombsToPut = nbombs;
 int hidden = cols*rows;
 
@@ -23,7 +23,8 @@ void setup() {
   }
   size(600, 600);
   strokeWeight(2);
-  l = width/cols;
+  lx = width/cols;
+  ly = height/rows;
   grid = new char[cols][rows];
   bomb = new boolean[cols][rows];
   discovered = new boolean[cols][rows];
@@ -73,6 +74,7 @@ void draw() {
     fill(0, 255, 0);
     textSize(60);
     text("YOU WON!", width/2, height/2);
+    println("YOU WON!");
     frameRate(0);
   }
 }
@@ -82,40 +84,40 @@ void draw_grid() {
     for (int j = 0; j < rows; j++) {
       if (!discovered[i][j]) {
         fill(150);
-        rect(i*l, j*l, (i+1)*l, (j+1)*l);
+        rect(i*lx, j*ly, (i+1)*lx, (j+1)*ly);
         if (flagged[i][j]) {
-          image(F, i*l, j*l, l, l);
+          image(F, i*lx, j*ly, lx, ly);
         }
       } else {
-        textSize(20*l/40);
+        textSize(20*min(lx, ly)/40);
         fill(255);
-        rect(i*l, j*l, (i+1)*l, (j+1)*l);
+        rect(i*lx, j*ly, (i+1)*lx, (j+1)*ly);
         if (grid[i][j]=='1') {
           fill(30, 144, 255);
-          text(grid[i][j], i*l+l/2, j*l+l*2/3);
+          text(grid[i][j], i*lx+lx/2, j*ly+ly*2/3);
         } else if (grid[i][j]=='2') {
           fill(0, 128, 0);
-          text(grid[i][j], i*l+l/2, j*l+l*2/3);
+          text(grid[i][j], i*lx+lx/2, j*ly+ly*2/3);
         } else if (grid[i][j]=='3') {
           fill(255, 0, 0);
-          text(grid[i][j], i*l+l/2, j*l+l*2/3);
+          text(grid[i][j], i*lx+lx/2, j*ly+ly*2/3);
         } else if (grid[i][j]=='4') {
           fill(0, 0, 255);
-          text(grid[i][j], i*l+l/2, j*l+l*2/3);
+          text(grid[i][j], i*lx+lx/2, j*ly+ly*2/3);
         } else if (grid[i][j]=='5') {
           fill(139, 0, 0);
-          text(grid[i][j], i*l+l/2, j*l+l*2/3);
+          text(grid[i][j], i*lx+lx/2, j*ly+ly*2/3);
         } else if (grid[i][j]=='6') {
           fill(95, 158, 160);
-          text(grid[i][j], i*l+l/2, j*l+l*2/3);
+          text(grid[i][j], i*lx+lx/2, j*ly+ly*2/3);
         } else if (grid[i][j]=='7') {
           fill(0);
-          text(grid[i][j], i*l+l/2, j*l+l*2/3);
+          text(grid[i][j], i*lx+lx/2, j*ly+ly*2/3);
         } else if (grid[i][j]=='8') {
           fill(100);
-          text(grid[i][j], i*l+l/2, j*l+l*2/3);
+          text(grid[i][j], i*lx+lx/2, j*ly+ly*2/3);
         } else if (grid[i][j]=='B') {
-          image(B, i*l+l/10, j*l+l/10, l*4/5, l*4/5);
+          image(B, i*lx+lx/10, j*ly+ly/10, lx*4/5, ly*4/5);
         }
       }
     }
@@ -127,6 +129,7 @@ void gameOver() {
   fill(255, 0, 0);
   textSize(60);
   text("GAME OVER", width/2, height/2);
+  println("GAME OVER,", (1-float(hidden)/float(cols*rows))*100, "% discovered.");
   frameRate(0);
 }
 
@@ -143,8 +146,8 @@ void discover(int x, int y) {
 }
 
 void mousePressed() {
-  int x = mouseX/l;
-  int y = mouseY/l;
+  int x = mouseX/lx;
+  int y = mouseY/ly;
   if (mouseButton==LEFT) {
     if (!flagged[x][y]) {
       if (!discovered[x][y]) {
