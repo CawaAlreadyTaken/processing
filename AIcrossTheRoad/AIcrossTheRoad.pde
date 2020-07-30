@@ -1,5 +1,5 @@
 Population pop;
-Row[] rows;
+Row[] rows; 
 
 // INSPIRED BY A VIDEO FROM CODEBULLET. https://www.youtube.com/channel/UC0e3QhIYukixgh5VVpKHH9Q
 
