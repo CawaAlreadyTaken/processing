@@ -1,3 +1,3 @@
 # Processing
 
-Here I will post some projects i made in processing. Link: [Processing ](https://processing.org/).
+Here I will publish some projects i made in processing. Link: [Processing ](https://processing.org/).
