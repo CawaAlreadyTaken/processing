@@ -66,14 +66,14 @@ void setup() {
 }
 
 String[][] chessboard0 = {
-  {"T1", "H1", "B1", "Q1", "K1", "B1", "H1", "T1"}, 
+  {"T1", "H1", "B1", "K1", "Q1", "B1", "H1", "T1"}, 
   {"P1", "P1", "P1", "P1", "P1", "P1", "P1", "P1"}, 
   {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
   {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
   {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
   {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
   {"P2", "P2", "P2", "P2", "P2", "P2", "P2", "P2"}, 
-  {"T2", "H2", "B2", "Q2", "K2", "B2", "H2", "T2"}, 
+  {"T2", "H2", "B2", "K2", "Q2", "B2", "H2", "T2"}, 
 };
 
 
@@ -87,7 +87,7 @@ void draw() {
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
         if (i%2==j%2) {
-          fill(0);
+          fill(255);
           if (j==nowY&&i==nowX&&!flag) fill(240, 230, 140);
           if ((j==prevMoveY&&i==prevMoveX)||(j==dy&&i==dx)) fill(135, 206, 250);
           if (i==checkX&&j==checkY) fill(255, 0, 0);
@@ -111,7 +111,7 @@ void draw() {
           } else if (chessboard0[j][i] == "Q1") image(Q1, i*l+l*1.5/8, j*l+l/8, l*5/8, l*6/8);
           //text(chessboard0[j][i], i*l+l/2-tSize/2, j*l+l/2);
         } else {
-          fill(255);
+          fill(0);
           if (j==nowY&&i==nowX&&!flag) fill(240, 230, 140);
           if ((j==prevMoveY&&i==prevMoveX)||(j==dy&&i==dx)) fill(135, 206, 250);
           if (i==checkX&&j==checkY) fill(255, 0, 0);
@@ -1007,11 +1007,11 @@ boolean checkK2(int x, int y, int pX, int pY, String[][] chessboard1) {
     if (chessboard1[y][x].charAt(1)!='2') {
       return true;
     } else return false;
-  } else if (pX==4&&pY==7&&x==2&&y==7) {
-    if (chessboard1[7][0]=="T2"&&chessboard1[7][1]=="  "&&chessboard1[7][2]=="  "&&chessboard1[7][3]=="  "&&neverMovedT2L&&neverMovedK2) return true;
+  } else if (pX==3&&pY==7&&x==1&&y==7) {
+    if (chessboard1[7][0]=="T2"&&chessboard1[7][1]=="  "&&chessboard1[7][2]=="  "&&neverMovedT2L&&neverMovedK2) return true;
     else return false;
-  } else if (pX==4&&pY==7&&x==6&&y==7) {
-    if (chessboard1[7][7]=="T2"&&chessboard1[7][6]=="  "&&chessboard1[7][5]=="  "&&neverMovedT2R&&neverMovedK2) return true;
+  } else if (pX==3&&pY==7&&x==6&&y==7) {
+    if (chessboard1[7][7]=="T2"&&chessboard1[7][6]=="  "&&chessboard1[7][5]=="  "&&chessboard1[7][4]=="  "&&neverMovedT2R&&neverMovedK2) return true;
     else return false;
   } else return false;
 }
@@ -1141,11 +1141,11 @@ boolean checkK(int x, int y, int pX, int pY, String[][] chessboard1) {
     if (chessboard1[y][x].charAt(1)!='1') {
       return true;
     } else return false;
-  } else if (pX==4&&pY==0&&x==2&&y==0) {
-    if (chessboard1[0][0]=="T1"&&chessboard1[0][1]=="  "&&chessboard1[0][2]=="  "&&chessboard1[0][3]=="  "&&neverMovedT1L&&neverMovedK1) return true;
+  } else if (pX==3&&pY==0&&x==1&&y==0) {
+    if (chessboard1[0][0]=="T1"&&chessboard1[0][1]=="  "&&chessboard1[0][2]=="  "&&neverMovedT1L&&neverMovedK1) return true;
     else return false;
-  } else if (pX==4&&pY==0&&x==6&&y==0) {
-    if (chessboard1[0][7]=="T1"&&chessboard1[0][6]=="  "&&chessboard1[0][5]=="  "&&neverMovedT1R&&neverMovedK1) return true;
+  } else if (pX==3&&pY==0&&x==6&&y==0) {
+    if (chessboard1[0][7]=="T1"&&chessboard1[0][6]=="  "&&chessboard1[0][5]=="  "&&chessboard1[0][4]=="  "&&neverMovedT1R&&neverMovedK1) return true;
     else return false;
   } else return false;
 }
@@ -1599,12 +1599,12 @@ void mouseClicked() {
             if (checkK(mouseX/l, mouseY/l, pX, pY, chessboard0)) {
               chessboard0[pY][pX] = "  ";
               chessboard0[mouseY/l][mouseX/l] = "K1";
-              if (pX==4&&pY==0&&mouseX/l==2&&mouseY/l==0) {
+              if (pX==3&&pY==0&&mouseX/l==1&&mouseY/l==0) {
                 chessboard0[pY][pX] = "  ";
                 chessboard0[mouseY/l][mouseX/l] = "K1";
-                chessboard0[0][3] = "T1";
+                chessboard0[0][2] = "T1";
                 chessboard0[0][0] = "  ";
-              } else if (pX==4&&pY==0&&mouseX/l==6&&mouseY/l==0) {
+              } else if (pX==3&&pY==0&&mouseX/l==6&&mouseY/l==0) {
                 chessboard0[pY][pX] = "  ";
                 chessboard0[mouseY/l][mouseX/l] = "K1";
                 chessboard0[0][5] = "T1";
