@@ -11,7 +11,7 @@ PImage Q2;
 PImage P1;
 PImage P2;
 PFont Font1;
-int p = 1;
+
 int l;
 int nowX = -1;
 int nowY = -1;
@@ -41,11 +41,25 @@ boolean neverMovedK1 = true;
 boolean neverMovedT2L = true;
 boolean neverMovedT2R = true;
 boolean neverMovedK2 = true;
+boolean starting = true; 
 
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 // # You can change this.
-int depth0 = 7; //1-7 (1-3 is veeery stupid, from 6 on it will take a while.)
+int depth0 = 6; //1-7 (1-3 is veeery stupid, from 6 on it will take a while.)
+int p = 2; //1: human starts, 2: bot starts
 //__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+String[][] chessboard0 = {
+  {"T1", "H1", "B1", "K1", "Q1", "B1", "H1", "T1"}, 
+  {"P1", "P1", "P1", "P1", "P1", "P1", "P1", "P1"}, 
+  {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
+  {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
+  {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
+  {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
+  {"P2", "P2", "P2", "P2", "P2", "P2", "P2", "P2"}, 
+  {"T2", "H2", "B2", "K2", "Q2", "B2", "H2", "T2"}, 
+};
+
 
 void setup() {
   size (720, 720);
@@ -64,18 +78,6 @@ void setup() {
   P1 = loadImage("media/P1.png");
   P2 = loadImage("media/P2.png");
 }
-
-String[][] chessboard0 = {
-  {"T1", "H1", "B1", "K1", "Q1", "B1", "H1", "T1"}, 
-  {"P1", "P1", "P1", "P1", "P1", "P1", "P1", "P1"}, 
-  {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
-  {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
-  {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
-  {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "}, 
-  {"P2", "P2", "P2", "P2", "P2", "P2", "P2", "P2"}, 
-  {"T2", "H2", "B2", "K2", "Q2", "B2", "H2", "T2"}, 
-};
-
 
 
 void draw() {
@@ -157,6 +159,10 @@ void draw() {
       text("LOADING...", width/2-tSize*3, height/2-height/20);
     }
     if (flagCount) count++;
+    if (starting) {
+      count = delay;
+      starting = false;  
+    }
     if (count==delay) {
       count = 0;
       flagCount = false;
